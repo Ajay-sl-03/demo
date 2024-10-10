@@ -1,2 +1,30 @@
 hiiii
 hello
+function validateOrderNumbers() {        
+    const orderInputs = document.querySelectorAll('input[name="ingredient_order_toppings[]"]');        
+    const orderNumbers = [];        
+    let hasDuplicates = false;
+
+    for (let i = 0; i < orderInputs.length; i++) {            
+        const orderNumber = orderInputs[i].value;            
+        if (orderNumber) {                
+            if (orderNumbers.includes(orderNumber)) {                    
+                alert('Duplicate order number detected: ' + orderNumber); 
+                orderInputs[i].classList.add('duplicate-order'); // Highlight the duplicate field
+                hasDuplicates = true;                 
+            } else {                     
+                orderInputs[i].classList.remove('duplicate-order'); // Remove highlight if not duplicate
+            }                
+            orderNumbers.push(orderNumber);             
+        }        
+    }
+
+    return !hasDuplicates; // Return false if duplicates are found
+}
+
+// Add 'change' event listener to each input field
+document.querySelectorAll('input[name="ingredient_order_toppings[]"]').forEach(input => {
+    input.addEventListener('change', function() {
+        validateOrderNumbers();
+    });
+});
